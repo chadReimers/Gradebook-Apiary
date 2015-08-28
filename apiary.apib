@@ -222,15 +222,15 @@ Common Parameters
 
 - `sourceId` (String) - Identifies the source of the `learningContextId` (together they define the context of all gradebook related resources, ex. course section).
 - `learningContextId` (String) - Identifies the specific learning item (e.g. course section) in the given `sourceId`. `sourceId` and `learningContextId` must both be provided.
-- `userId` (UUID) - Identifies the user that earned the item score or grade or attempt.
-- `assignmentId` (UUID) - Identifies the specific assignment. AssignmentId is **not** unique across course sections, it **must** be in conjuction with `sourceId` and `learningContextId` to be meaningful.
+- `userId` (String) - Identifies the user that earned the item score or grade or attempt.
+- `assignmentId` (String) - Identifies the specific assignment. AssignmentId is **not** unique across course sections, it **must** be in conjuction with `sourceId` and `learningContextId` to be meaningful.
 
 Common Elements
 
         "changed": { 
             "cause": "enum", // reason for changing the grade
             "description": "String, Some free-form elaboration of the change cause.",
-            "date": "ISO 8601 date & time, UTC zone" // when the change was made
+            "date": "ISO 8601 date & time, UTC zone", // when the change was made
             "by": {"id": "string identifying system or ID of user"}
         }
         
@@ -270,7 +270,7 @@ The Gradebook view of users in a course provides grade calculation information a
                 "_links": {
                     "self": { "href" : "https://[domain]/gradebook/source/{sourceId}/learningcontext/{learningContextId}/users" }
                 },
-                "classAvgGrade": "99.5",
+                "classAvgGrade": 99.5,
                 "_embedded": {
                     "users": [{
                         "_links": {
@@ -278,11 +278,11 @@ The Gradebook view of users in a course provides grade calculation information a
                             "user": { "href" : "https://[domain]/registrar/sectionassociations/{id}/user/{userId}" // this path is not correct, for illustration only }
                         },
                         "id": "String",
-                        "gradeToDate": "27.125",
+                        "gradeToDate": 27.125,
                         "changed": { 
                             "cause": "enum", // reason for changing the grade
                             "description": "String, Some free-form elaboration of the change cause.",
-                            "date": "ISO 8601 date & time, UTC zone" // when the change was made
+                            "date": "ISO 8601 date & time, UTC zone", // when the change was made
                             "by": {"id": "string identifying system or UUID of user"}
                         }
                     }]
@@ -508,7 +508,7 @@ The gradebook view of an Assignment provides calculations at an assignment level
 
 The gradebook view of assignments for a user, containing course-level, user-level, and assignment-level calculations.
 
-The assigment grade can also be expanded to provide full grade details for each assigment. The example below showcases this option.
+The assignment grade can also be expanded to provide full grade details for each assignment. The example below showcases this option.
 
 ** PROPOSED OPTION - not guaranteed!** It can be filtered with multiple assignmentIds to provide a smaller collection of assignments than would be returned as all assignments for the user (no Id provided) but more than 1.
 
@@ -596,7 +596,7 @@ The assigment grade can also be expanded to provide full grade details for each 
 
 The gradebook view of assignments for a user, containing course-level, user-level, and assignment-level calculations.
 
-The assigment grade can also be expanded to provide full grade details for each assigment. The example below showcases this option.
+The assignment grade can also be expanded to provide full grade details for each assignment. The example below showcases this option.
 
 ### /gradebook/source/{sourceId}/learningcontext/{learningContextId}/users/{userId}/assignments/{assignmentId}{?expand}[GET]
 + Parameters
@@ -674,14 +674,14 @@ The assigment grade can also be expanded to provide full grade details for each 
 
 The gradebook view of users & categories provides a per-category breakdown of a user's grade by category. It is read-only.
 
-Proposed, NOT SUPPORTED IN MVP: A two depth expantion on assigment and grade is possible to provide full assignment and grade details. The example below showcases this option.
+Proposed, NOT SUPPORTED IN MVP: A two depth expantion on assignment and grade is possible to provide full assignment and grade details. The example below showcases this option.
 
 ### /gradebook/source/{sourceId}/learningcontext/{learningContextId}/users/{userId}/categories/{?expand}[GET]
 + Parameters
     + sourceId (required, string, `revel`)
     + learningContextId (required, string, `12345A`)
     + userId (required, String, `879aba3a-d596-4ec6-bd50-fa37453cecfc`)
-    + expand (optional, string, `expand=categories.assignments.grade provides grade information for each assigment in the category for the user`)
+    + expand (optional, string, `expand=categories.assignments.grade provides grade information for each assignment in the category for the user`)
     
 + Request
     + Headers
