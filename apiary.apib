@@ -9,7 +9,7 @@ All resources are returned in JSON+HAL format, which allows navigating between r
 
 ## General Headers
 - `X-Authorization` Required header containing a valid PI Authentication token. A vaid token and the specific user identified in the token are used for various levels of Authorization.
-- `Correlation-Id` Strongly recommended header. Included in all responses. See https://neo.pearson.com/groups/api-practice-area/blog/2015/04/15/additional-correlation-id-requirements-api-practice-recap-for-2015-04-09
+- `Correlation-Id` Strongly recommended header. Included in all responses. Cerrelation-Id is documented here as a UUID, but it may be any string. Gradebook will accept a string on incoming API calls. When required to generate a Correlation-Id, Gradebook will always create a new UUID as the Correlation-Id value. For further detials, see https://neo.pearson.com/groups/api-practice-area/blog/2015/04/15/additional-correlation-id-requirements-api-practice-recap-for-2015-04-09
 
 
 ## Not Found Error [/grid/error/notfound]
