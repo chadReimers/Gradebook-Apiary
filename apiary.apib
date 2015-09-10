@@ -240,7 +240,7 @@ Any element that can be overridden includes the changed element to provide detai
 The collection of routes providing the gradebook perspective on various entities. These routes provide access to all of the calculated values related to the particular view of the gradebook.
 For example: from a user level, calculations such as the class average ("above" the user) and the user's grade to date, and any other calculated values at the level of the user.
 
-## Users [/gradebook/source/{sourceId}/learningcontext/{learningContextId}/users/{?filter}]
+## Users [/gradebook/source/{sourceId}/learningcontext/{learningContextId}/users{?filter}]
 
 The Gradebook view of users in a course provides grade calculation information at the course and collection of embedded users with grades. 
 
@@ -302,7 +302,7 @@ The Gradebook view of users in a course provides grade calculation information a
 
 The Gradebook view of a single user provides grade calculation information for the user in the course. Note that the PUT route is for updating only 1 value. Changes to any other calculated values will be ignored.
 
-### /gradebook/source/{sourceId}/learningcontext/{learningContextId}/users/{Id} [GET]
+### /gradebook/source/{sourceId}/learningcontext/{learningContextId}/users/{userId} [GET]
 + Parameters
     + sourceId (required, string, `revel`)
     + learningContextId (required, string, `12345A`)
@@ -348,11 +348,11 @@ The Gradebook view of a single user provides grade calculation information for t
     [Not Found Error][]
 
 
-### /gradebook/source/{sourceId}/learningcontext/{learningContextId}/users/{userId}[PUT]
+### /gradebook/source/{sourceId}/learningcontext/{learningContextId}/users/{userId} [PUT]
 + Parameters
     + sourceId (required, string, `revel`)
     + learningContextId (required, string, `12345A`)
-    + userId (optional, string )
+    + userId (optional, string, `c12ea628-8afd-412f-885b-278be55f0dc8`)
     
 + Request
     + Headers
@@ -407,13 +407,13 @@ The Gradebook view of a single user provides grade calculation information for t
 + Response 404
     [Not Found Error][]
 
-## Assignments [/gradebook/source/{sourceId}/learningcontext/{learningContextId}/assignments/]
+## Assignments [/gradebook/source/{sourceId}/learningcontext/{learningContextId}/assignments]
 
 The gradebook view of multiple Assignments provides calculations at a course and assignment level. It is read-only.
 
 ** PROPOSED OPTION - not guaranteed!** It can be filtered with multiple assignmentIds to provide a smaller collection of assignments than would be returned as all assignments for the sourceId and learningContextId (no Id provided) but more than 1.
 
-### /gradebook/source/{sourceId}/learningcontext/{learningContextId}/assignments/[GET]
+### /gradebook/source/{sourceId}/learningcontext/{learningContextId}/assignments [GET]
 + Parameters
     + sourceId (required, string, `revel`)
     + learningContextId (required, string, `12345A`)
@@ -435,7 +435,7 @@ The gradebook view of multiple Assignments provides calculations at a course and
     
             {
                 "_links": {
-                    "self": { "href" : "https://[domain]/gradebook/source/{sourceId}/learningcontext/{learningContextId}/assignments/" }
+                    "self": { "href" : "https://[domain]/gradebook/source/{sourceId}/learningcontext/{learningContextId}/assignments" }
                 },
                 "classAvgGrade": 99.5,
                 "_embedded" : {
@@ -464,7 +464,7 @@ The gradebook view of multiple Assignments provides calculations at a course and
 
 The gradebook view of an Assignment provides calculations at an assignment level. It is read-only.
 
-### /gradebook/source/{sourceId}/learningcontext/{learningContextId}/assignments/[GET]
+### /gradebook/source/{sourceId}/learningcontext/{learningContextId}/assignments/{assignmentId} [GET]
 + Parameters
     + sourceId (required, string, `revel`)
     + learningContextId (required, string, `12345A`)
@@ -504,7 +504,7 @@ The gradebook view of an Assignment provides calculations at an assignment level
 + Response 404
     [Not Found Error][]
 
-## User Assignments [/gradebook/source/{sourceId}/learningcontext/{learningContextId}/users/{userId}/assignments/{?expand}{&filter}]
+## User Assignments [/gradebook/source/{sourceId}/learningcontext/{learningContextId}/users/{userId}/assignments{?expand}{&filter}]
 
 The gradebook view of assignments for a user, containing course-level, user-level, and assignment-level calculations.
 
@@ -512,7 +512,7 @@ The assignment grade can also be expanded to provide full grade details for each
 
 ** PROPOSED OPTION - not guaranteed!** It can be filtered with multiple assignmentIds to provide a smaller collection of assignments than would be returned as all assignments for the user (no Id provided) but more than 1.
 
-### /gradebook/source/{sourceId}/learningcontext/{learningContextId}/users/{userId}/assignments/{?expand}{&filter}[GET]
+### /gradebook/source/{sourceId}/learningcontext/{learningContextId}/users/{userId}/assignments{?expand}{&filter}[GET]
 + Parameters
     + sourceId (required, string, `revel`)
     + learningContextId (required, string, `12345A`)
@@ -537,7 +537,7 @@ The assignment grade can also be expanded to provide full grade details for each
     
             {
                 "_links": {
-                    "self": { "href" : "https://[domain]/gradebook/source/{sourceId}/learningcontext/{learningContextId}/users/{userId}/assignments/" }
+                    "self": { "href" : "https://[domain]/gradebook/source/{sourceId}/learningcontext/{learningContextId}/users/{userId}/assignments" }
                 },
                 "classAvgGrade": 99.5,
                 "gradeToDate": 88.125,
@@ -676,7 +676,7 @@ The gradebook view of users & categories provides a per-category breakdown of a 
 
 Proposed, NOT SUPPORTED IN MVP: A two depth expantion on assignment and grade is possible to provide full assignment and grade details. The example below showcases this option.
 
-### /gradebook/source/{sourceId}/learningcontext/{learningContextId}/users/{userId}/categories/{?expand}[GET]
+### /gradebook/source/{sourceId}/learningcontext/{learningContextId}/users/{userId}/categories{?expand}[GET]
 + Parameters
     + sourceId (required, string, `revel`)
     + learningContextId (required, string, `12345A`)
@@ -729,7 +729,7 @@ Proposed, NOT SUPPORTED IN MVP: A two depth expantion on assignment and grade is
                                     "grades": [{
                                         "_links": { 
                                             "self": { "href" : "https://[domain]/gradebook/source/{sourceId}/learningcontext/{learningContextId}/users/{userId}/assignments/{assignmentId}/grade" },
-                                            "assignment": { "href" : "https://[domain]/gradebook/source/{sourceId}/learningcontext/{learningContextId}/users/{userId}/assignments/{assignmentId}/" }
+                                            "assignment": { "href" : "https://[domain]/gradebook/source/{sourceId}/learningcontext/{learningContextId}/users/{userId}/assignments/{assignmentId}" }
                                         },
                                         "assignmentId": "String",
                                         "userId": "String",
