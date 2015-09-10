@@ -554,12 +554,11 @@ The assignment grade can also be expanded to provide full grade details for each
                         "_embedded":{
                             "grade": {
                                 "_links": { 
-                                    "self": { "href" : "https://[domain]/gradebook/source/{sourceId}/learningcontext/{learningContextId}/users/{userId}/assignments/{assignmentId}/grade" },
-                                    "gradedAttempt": { "href" : "https://[domain]/gradebook/source/{sourceId}/learningcontext/{learningContextId}/users/{userId}/assignments/{assignmentId}/attempts/{attempt.id}" }
+                                    "self": { "href" : "https://[domain]/gradebook/source/{sourceId}/learningcontext/{learningContextId}/users/{userId}/assignments/{assignmentId}/grade" }
                                 },
+                                "attemptId": 3, // Optional int - sequential identifier of the attempt used to populate the assignment grade
                                 "assignmentId": "String",
                                 "userId": "String",
-                                "numberOfAttempts": 3, // int, number of attempts on the assignment as reported by Scorring Engines. If an attempt is manaully modified, that modified attempt is recoreded in the gradebook with the same attempt number. Attempt numbers are not guaranteed unique for a student and assignment.
                                 "pointsEarned": 19.5, // double, raw number of points earned (correct) on the assignment, independent of any adjustments, penalties, etc. by the scorring engine.
                                 "extraCreditPointsEarned": 10.0, // double, not yet supported (known future requirement)
                                 "pointsAdjusted": 17.5, // double, number of points on the assignment, after any adjustment by the scorring engine OR manual intervention to set the points (and by extension the grade).
@@ -573,10 +572,10 @@ The assignment grade can also be expanded to provide full grade details for each
                                     "by": {"id": "string identifying system or UUID of user"}
                                 },
                                 "lastModified": "ISO 8601 date & time, UTC zone", // when the student earned the grade, critical for ordering attempts, including manual adjustment of an attempt
-                                "ext": [{
-                                    "extType":"type name of origin, eg. writingAssignment",
-                                    "data":{JSON}
-                                }] // additional infomration about the assignment, that may be needed in display, but is not (yet) a first class entity for all grades in the gradebook.
+                                "ext": 
+                                    [{  "extType":"type name of origin, eg. writingAssignment",
+                                        "data":{JSON}
+                                    }] // additional infomration about the assignment, that may be needed in display, but is not (yet) a first class entity for all grades in the gradebook.
                             }
                         }
                     }]
