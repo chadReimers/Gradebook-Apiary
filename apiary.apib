@@ -630,32 +630,7 @@ The assignment grade can also be expanded to provide full grade details for each
                 "categoryId": "12345",
                 "userId": "String",
                 "_embedded":{
-                    "grade": {
-                        "_links": { 
-                            "self": { "href" : "https://[domain]/gradebook/source/{sourceId}/learningcontext/{learningContextId}/users/{userId}/assignments/{assignmentId}/grade" }
-                        },
-                        "attemptId": 3,
-                        "assignmentId": "String",
-                        "userId": "String",
-                        "pointsEarned": 19.5, // double, raw number of points earned (correct) on the assignment, independent of any adjustments, penalties, etc. by the scorring engine.
-                        "extraCreditPointsEarned": 10.0, // double, not yet supported (known future requirement)
-                        "pointsAdjusted": 17.5, // double, number of points on the assignment, after any adjustment by the scorring engine OR manual intervention to set the points (and by extension the grade).
-                        "percentAdjusted": 85, // double, the attempt expressed as a percentage of assignment points possible (attempt.pointsAdjusted / assignment.pointsPossible ) * 100
-                        "omit": boolean, // leave out of any calculations/aggregations, regardless of other rules, attempt 
-                        "state": "enum: Not Started|In Progress|Complete",
-                        "changed": { 
-                            "cause": "enum", // reason for changing the grade
-                            "description": "String, Some free-form elaboration of the change cause.",
-                            "date": "ISO 8601 date & time, UTC zone", // when the change was made
-                            "by": {"id": "string identifying system or UUID of user"}
-                        },
-                        "lastModified": "ISO 8601 date & time, UTC zone", // when the student earned the grade, critical for ordering attempts, including manual adjustment of an attempt
-                        "ext": 
-                            [{
-                                "extType":"type name of origin, eg. writingAssignment",
-                                "data":{JSON}
-                            }] // additional infomration about the assignment, that may be needed in display, but is not (yet) a first class entity for all grades in the gradebook.
-                    }
+                    [Assignment Grade Response][]
                 }
             }
 
