@@ -510,7 +510,7 @@ The gradebook view of assignments for a user, containing course-level, user-leve
 
 The assignment grade can also be expanded to provide full grade details for each assignment. The example below showcases this option.
 
-** PROPOSED OPTION - not guaranteed!** It can be filtered with multiple assignmentIds to provide a smaller collection of assignments than would be returned as all assignments for the user (no Id provided) but more than 1.
+It can be filtered with one or more assignmentIds to provide a smaller collection of assignments than would be returned as all assignments for the user (no Id provided).
 
 ### /gradebook/source/{sourceId}/learningcontext/{learningContextId}/users/{userId}/assignments{?expand}{&filter}[GET]
 + Parameters
@@ -518,7 +518,7 @@ The assignment grade can also be expanded to provide full grade details for each
     + learningContextId (required, string, `12345A`)
     + userId (required, String, `879aba3a-d596-4ec6-bd50-fa37453cecfc`)
     + expand (optional, string, `?expand=assignments.grade`)
-    + filter (optional, string, `PROPOSED OPTION - not guaranteed  ?filter=assignmentId::6136a21e-f04f-469a-9866-edfcfd5acf5d|assignmentId:::c7cbba1e-f235-4e2a-8bf6-03dcc5726ef7|etc|assignmentId::d88a6ce5-e2d5-4768-94e3-48790cf0231a`)
+    + filter (optional, string, `?filter=assignment.id::6136a21e-f04f-469a-9866-edfcfd5acf5d|assignment.id:::c7cbba1e-f235-4e2a-8bf6-03dcc5726ef7|etc|assignment.id::d88a6ce5-e2d5-4768-94e3-48790cf0231a`)
     
 + Request
     + Headers
@@ -716,8 +716,7 @@ Proposed, NOT SUPPORTED IN MVP: A two depth expantion on assignment and grade is
                             "assignments": [{
                                 "_links": {
                                     "self": { "href" : "https://[domain]/gradebook/source/{sourceId}/learningcontext/{learningContextId}/users/{userId}/assignments/{assignmentId}" },
-                                    "assignment": "https://[domain]/scopeNSequence/assignment/{assignmentId}" // this path is not correct, for illustration only,
-                                    "grade": "https://[domain]/gradebook/source/{sourceId}/learningcontext/{learningContextId}/users/{userId}/assignments/{assignmentId}/grade"
+                                    "assignment": "https://[domain]/scopeNSequence/assignment/{assignmentId}" // this path is not correct, for illustration only
                                 },
                                 "id": "String",
                                 "avgGrade": 77.67, // additional assignment-level values may be added
@@ -726,13 +725,12 @@ Proposed, NOT SUPPORTED IN MVP: A two depth expantion on assignment and grade is
                                 "_embedded": {
                                     "grades": [{
                                         "_links": { 
-                                            "self": { "href" : "https://[domain]/gradebook/source/{sourceId}/learningcontext/{learningContextId}/users/{userId}/assignments/{assignmentId}/grade" },
-                                            "assignment": { "href" : "https://[domain]/gradebook/source/{sourceId}/learningcontext/{learningContextId}/users/{userId}/assignments/{assignmentId}" }
+                                            "self": { "href" : "https://[domain]/gradebook/source/{sourceId}/learningcontext/{learningContextId}/users/{userId}/assignments/{assignmentId}/grade" }
                                         },
+                                        "attemptId": 3,
                                         "assignmentId": "String",
                                         "userId": "String",
                                         // further elements only if expanded
-                                        "attemptNumber": 3, // int, number of this attempt at the assignment as reported by IRR and/or Scorring Engine. If an attempt is manaully modified, that modified attempt is recoreded in the gradebook with the same attempt number. Attempt numbers are not guaranteed unique for a student and assignment.
                                         "pointsEarned": 19.5, // double, raw number of points earned (correct) on the assignment, independent of any adjustments, penalties, etc. by the scorring engine.
                                         "extraCreditPointsEarned": 10.0, // double, not yet supported (known future requirement)
                                         "pointsAdjusted": 17.5, // double, number of points on the assignment, after any adjustment by the scorring engine OR manual intervention to set the points (and by extension the grade).
@@ -746,10 +744,11 @@ Proposed, NOT SUPPORTED IN MVP: A two depth expantion on assignment and grade is
                                             "by": {"id": "string identifying system or UUID of user"}
                                         },
                                         "lastModified": "ISO 8601 date & time, UTC zone", // when the student earned the grade, critical for ordering attempts, including manual adjustment of an attempt
-                                        "ext": [{
-                                            "extType":"type name of origin, eg. writingAssignment",
-                                            "data":{JSON}
-                                        }] // additional infomration about the assignment, that may be needed in display, but is not (yet) a first class entity for all grades in the gradebook.
+                                        "ext": 
+                                            [{
+                                                "extType":"type name of origin, eg. writingAssignment",
+                                                "data":{JSON}
+                                            }] // additional infomration about the assignment, that may be needed in display, but is not (yet) a first class entity for all grades in the gradebook.
                                     }]
                                 }
                             }]
